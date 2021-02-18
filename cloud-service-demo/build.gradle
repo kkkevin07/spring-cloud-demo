@@ -1,0 +1,43 @@
+plugins {
+    id "com.google.cloud.tools.jib" version "${jibVersion}"
+    id "org.springframework.boot" version "${springBootVersion}"
+}
+
+apply plugin: "java"
+apply plugin: "org.springframework.boot"
+apply plugin: "io.spring.dependency-management"
+
+if (!hasProperty("jibProfile")) {
+    ext.jibProfile = "dev"
+}
+apply from: "jib-${jibProfile}.gradle"
+
+jar {
+    enabled = true
+}
+
+dependencies {
+    implementation project(":cloud-config-web")
+    implementation project(":cloud-config-boot")
+    implementation project(":cloud-common-utils")
+    implementation project(":cloud-common-entity")
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    runtimeOnly "mysql:mysql-connector-java:${mysqlVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    implementation "com.github.ben-manes.caffeine:caffeine:${caffeineVersion}"
+    developmentOnly "org.springframework.boot:spring-boot-devtools:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-aop:${springBootVersion}"
+    implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatisVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-security:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-validation:${springBootVersion}"
+    implementation "org.springframework.cloud:spring-cloud-starter-openfeign:${springCloudOpenFeignVersion}"
+    implementation "org.springframework.cloud:spring-cloud-starter-consul-discovery:${springCloudConsulVersion}"
+    implementation group: "org.springframework.boot", name: "spring-boot-dependencies", version: "${springBootVersion}", ext: "pom"
+    implementation group: "org.springframework.cloud", name: "spring-cloud-dependencies", version: "${springCloudVersion}", ext: "pom"
+    implementation group: "com.alibaba.cloud", name: "spring-cloud-alibaba-dependencies", version: "${springCloudAlibabaVersion}", ext: "pom"
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.springframework.security:spring-security-test"
+}

@@ -1,0 +1,20 @@
+plugins {
+
+}
+
+apply plugin: "java"
+
+jar {
+    enabled = true
+}
+
+dependencies {
+    implementation project(":cloud-common-utils")
+    implementation project(":cloud-common-entity")
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+    implementation "org.springframework.data:spring-data-commons:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-validation:${springBootVersion}"
+    implementation "org.springframework.cloud:spring-cloud-starter-openfeign:${springCloudOpenFeignVersion}"
+}

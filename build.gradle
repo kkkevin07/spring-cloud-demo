@@ -4,23 +4,30 @@ plugins {
 
 ext {
     lombokVersion = "1.18.16"
-    orgSpringframeworkBootVersion = "2.4.2"
-    comGoogleCloudToolsJibVersion = "2.7.1"
-    mybatisSpringBootStarterVersion = "2.1.4"
+    jibVersion = "2.7.1"
+
+    mysqlVersion = "8.0.22"
+
+    springBootVersion = "2.3.3.RELEASE"
+    springCloudVersion = "Hoxton.SR8"
+    springCloudConsulVersion = "2.2.4.RELEASE"
+    springCloudOpenFeignVersion = "2.2.5.RELEASE"
+    springCloudAlibabaVersion = "2.2.5.RELEASE"
+    jacksonVersion = "2.11.2"
+    mybatisVersion = "2.1.4"
+
+    jwtVersion = "3.12.1"
+    orikaVersion = "1.9.0"
+    caffeineVersion = "2.8.8"
     commonsLang3Version = "3.11"
 }
 
 allprojects {
-    apply plugin: "java"
+
     apply plugin: "idea"
-    apply plugin: "jacoco"
 
     sourceCompatibility = 11
     targetCompatibility = 11
-
-    jar {
-        enabled = true
-    }
 
     group "com.pongsky.cloud"
     version "1.0.0"
@@ -30,11 +37,6 @@ allprojects {
         maven { url "https://maven.aliyun.com/repository/central" }
         maven { url "https://maven.aliyun.com/repository/jcenter" }
         jcenter()
-    }
-
-    dependencies {
-        compileOnly "org.projectlombok:lombok:${lombokVersion}"
-        annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
     }
 
 }
