@@ -1,6 +1,6 @@
 application:
   name: Cloud # 工程名称
-  module: Payment # 模块名称
+  module: Eureka # 模块名称
   version: 1.0.0 # 工程版本号
   formatted-version: PongSky ${application.name}-${application.module} ${application.version} # 格式化版本
 spring:
@@ -20,8 +20,6 @@ spring:
       time: HH:mm:ss # time 转换格式
       date: yyyy-MM-dd # date 转换格式
       date-time: yyyy-MM-dd HH:mm:ss # date-time 转换格式
-  resources:
-    add-mappings: false # 不要为资源文件建立映射
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss # 设置时间默认序列化格式
     time-zone: Asia/Shanghai # 设置序列化时区
@@ -45,27 +43,25 @@ spring:
         enabled: false # 禁用 RibbonLoadBalancerClient
   devtools:
     livereload:
-      port: 20002 # 热部署端口号
+      port: 20000 # 热部署端口号
 logging:
   pattern:
     console: ${CONSOLE_LOG_PATTERN:%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}  %-5.5L{5}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}} # 控制台日志打印格式
 server:
-  port: 10002 # 服务端口号
+  port: 10000 # 服务端口号
   shutdown: graceful # 优雅关机
-mybatis:
-  configuration:
-    map-underscore-to-camel-case: true # 查询字段下划线自动转驼峰
-feign:
-  client:
-    config:
-      default:
-        loggerLevel: FULL # 日志记录级别
-        connectTimeout: 5000 # 建立连接超时限制
-        readTimeout: 5000 # 从建立连接起到连接结束超时限制
 eureka:
-  client:
-    service-url:
-      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@localhost:10000/eureka/
-  #使用真实ip地址注册
   instance:
-    prefer-ip-address: true
+    hostname: localhost
+  client:
+    # 是否注册自己
+    register-with-eureka: false
+    # 是否检索服务
+    fetch-registry: false
+    serviceUrl:
+      #密码注册认证
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@localhost:${server.port}/eureka/
+  server:
+    enable-self-preservation: false
+    # 每隔10s扫描服务列表，移除失效服务
+    eviction-interval-timer-in-ms: 10000

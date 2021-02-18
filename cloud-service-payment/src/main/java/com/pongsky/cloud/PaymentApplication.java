@@ -4,7 +4,8 @@ import com.pongsky.cloud.config.DatabaseConfig;
 import com.pongsky.cloud.config.JacksonConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Import;
 
@@ -12,8 +13,9 @@ import org.springframework.context.annotation.Import;
  * @author pengsenhao
  * @create 2021-02-10
  */
+@EnableEurekaClient
 @EnableFeignClients
-@EnableDiscoveryClient
+@EnableCircuitBreaker
 @SpringBootApplication
 @Import({
         JacksonConfig.class,
