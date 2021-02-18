@@ -61,7 +61,7 @@ public class PaymentController {
      *
      * @return 获取 Payment 随机 UUID
      */
-    @HystrixCommand
+//    @HystrixCommand
     @RequestMapping("/uid")
     public Object uid() {
         // TODO controller 方法增加 @HystrixCommand，会导致 open feign 远程调用失败

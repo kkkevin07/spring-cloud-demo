@@ -10,6 +10,7 @@ spring:
     active: local # 选择配置文件
   security:
     user:
+      name: ${application.name} # security 默认账号
       password: ${application.name} # security 默认密码
   mvc:
     log-resolved-exception: true # 开启日志解析异常
@@ -39,31 +40,22 @@ spring:
     ansi:
       enabled: always # 启用控制台打印颜色
   cloud:
-    consul:
-      discovery:
-        service-name: ${spring.application.name} # 服务名称
-        instance-id: ${spring.application.name}-${random.uuid} # 唯一实例ID
-        health-check-critical-timeout: 30s # 设置健康检查失败多长时间后，取消注册
     loadbalancer:
       ribbon:
         enabled: false # 禁用 RibbonLoadBalancerClient
   devtools:
     livereload:
-      port: 20000 # 热部署端口号
+      port: 20003 # 热部署端口号
 logging:
   pattern:
     console: ${CONSOLE_LOG_PATTERN:%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}  %-5.5L{5}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}} # 控制台日志打印格式
 server:
-  port: 10000 # 服务端口号
+  port: 10003 # 服务端口号
   shutdown: graceful # 优雅关机
 mybatis:
   configuration:
     map-underscore-to-camel-case: true # 查询字段下划线自动转驼峰
 feign:
-  okhttp:
-    enabled: true # 启用 okhttp
-  httpclient:
-    enabled: false # 禁用 httpclient
   client:
     config:
       default:
@@ -72,3 +64,10 @@ feign:
         readTimeout: 5000 # 从建立连接起到连接结束超时限制
   hystrix:
     enabled: true # 开启 hystrix
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@localhost:10000/eureka/
+  #使用真实ip地址注册
+  instance:
+    prefer-ip-address: true
